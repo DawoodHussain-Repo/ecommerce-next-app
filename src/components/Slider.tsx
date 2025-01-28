@@ -10,7 +10,7 @@ const slides = [
     desc: "Description 1",
     img: "https://images.pexels.com/photos/6864554/pexels-photo-6864554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     url: "https://www.google.com",
-    bg: "red",
+    bg: "bg-orange-200",
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const slides = [
     desc: "Description 2",
     img: "https://images.pexels.com/photos/6864554/pexels-photo-6864554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     url: "https://www.google.com",
-    bg: "blue",
+    bg: "bg-orange-200",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const slides = [
     desc: "Description 3",
     img: "https://images.pexels.com/photos/6864554/pexels-photo-6864554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     url: "https://www.google.com",
-    bg: "green",
+    bg: "bg-orange-200",
   },
 ];
 
@@ -45,7 +45,7 @@ useEffect(() => {
 });
 
   return (
-    <div className="h-[calc(100vh-80px)] overflow-hidden relative">
+    <div className="h-[calc(100vh-80px)]  overflow-hidden relative">
       {/* Slides */}
       <div
         className="w-max h-full flex transition-all ease-in-out duration-1000"
@@ -86,14 +86,14 @@ useEffect(() => {
         {slides.map((_, index) => (
           <div
             key={index}
-            className={`w-6 h-6 flex items-center justify-center cursor-pointer ${
-              current === index ? "scale-125 ring-2 ring-gray-600" : "ring-1 ring-gray-400"
+            className={`w-3 h-3 flex items-center justify-center cursor-pointer ${
+              current === index ? "scale-125 ring-2 ring-gray-700" : "ring-1 ring-gray-500"
             } rounded-full transition-transform duration-300`}
             onClick={() => handleSlideChange(index)}
           >
             <div
-              className={`w-4 h-4 ${
-                current === index ? "bg-gray-600" : "bg-gray-400"
+              className={`w-2 h-2 ${
+                current === index ? "bg-gray-700" : "bg-gray-500"
               } rounded-full`}
             />
           </div>
