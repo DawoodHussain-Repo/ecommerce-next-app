@@ -10,7 +10,7 @@ const slides = [
     desc: "Description 1",
     img: "https://images.pexels.com/photos/6864554/pexels-photo-6864554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     url: "https://www.google.com",
-    bg: "bg-orange-200",
+    bg: "bg-gradient-to-r from-[#fbc2a5] via-[#e19a75] to-[#c17955] ",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const slides = [
     desc: "Description 3",
     img: "https://images.pexels.com/photos/6864554/pexels-photo-6864554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     url: "https://www.google.com",
-    bg: "bg-orange-200",
+    bg: "bg-white",
   },
 ];
 
@@ -48,16 +48,16 @@ useEffect(() => {
     <div className="h-[calc(100vh-80px)]  overflow-hidden relative">
       {/* Slides */}
       <div
-        className="w-max h-full flex transition-all ease-in-out duration-1000"
+        className="w-max h-full flex transition-all ease-in-out duration-1000 "
         style={{ transform: `translateX(-${current * 100}vw)` }}
       >
         {slides.map((slide) => (
           <div
             key={slide.id}
-            className={`w-screen h-full flex flex-col xl:flex-row ${slide.bg} gap-16`}
+            className={`w-screen h-full flex flex-col xl:flex-row ${slide.bg} gap-16 `}
           >
             {/* Left Content */}
-            <div className="h-full xl:w-1/2 flex flex-col justify-center items-center gap-8 2xl:gap-12 text-center">
+            <div className="h-full py-6 xl:w-1/2 flex flex-col justify-center items-center gap-8 2xl:gap-12 text-center">
               <h2 className="text-xl lg:text-3xl 2xl:text-5xl font-bold mb-4">{slide.desc}</h2>
               <h1 className="text-5xl lg:text-6xl 2xl:text-8xl font-semibold">{slide.title}</h1>
               <Link href={slide.url}>

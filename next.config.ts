@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "via.placeholder.com", // Fixed the unnecessary 'https://' part
       },
+      {
+        protocol: "https",
+        hostname: "static.wixstatic.com", // Fixed the unnecessary 'https://' part
+      },
     ],
   },
 };
