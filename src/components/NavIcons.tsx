@@ -5,18 +5,22 @@ import React, { useState } from 'react';
 import Profile from '../../public/user.png';
 import NotificationIcon from '../../public/bell.png';
 import ShoppingBag from '../../public/shopping-bag.png';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import CartModal from './CartModal';
-
+import useWixClient from '@/hooks/useWixClient';
+import Cookies from 'js-cookie';
+import { log } from 'console';
 const NavIcons = () => {
+  const wixClient = useWixClient();
   const router = useRouter();
+  const isLoggedIn = wixClient.auth.loggedIn();
   const [profileOpen, setProfileOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+const [loading,isLoading] = useState(false);
 
-  // Replace isLogged with a prop or state in production
-  const isLogged = true;
+  const isLogged = isLoggedIn;
 
   const handleProfileClick = () => {
     if (!isLogged) {
@@ -25,7 +29,16 @@ const NavIcons = () => {
       setProfileOpen(!profileOpen);
     }
   };
+const handleLogout = async () => {
+  isLoading(true);
+  Cookies.remove("refreshToken");
+  const { logoutUrl } = await wixClient.auth.logout(window.location.href);
+  router.push(logoutUrl);
+  setProfileOpen(false);
+  isLoading(false);
 
+
+}
   return (
     <div className="flex gap-4 relative">
       {/* Profile Icon */}
@@ -43,8 +56,8 @@ const NavIcons = () => {
             <Link href="/profile" className="block px-4 py-2 hover:bg-gray-200 rounded-lg">
               Profile
             </Link>
-            <Link href="/" className="block px-4 py-2 hover:bg-gray-200 rounded-lg">
-              Logout
+            <Link href="/" className="block px-4 py-2 hover:bg-gray-200 rounded-lg" onClick={handleLogout}>
+            {loading ? "Loading..." : "Logout"}
             </Link>
           </div>
         )}

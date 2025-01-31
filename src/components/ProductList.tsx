@@ -40,7 +40,7 @@ const ProductList = async (
   );
   //.find();
 
-  if(searchParams?.sort)
+  if(await searchParams?.sort)
     {
       const [sortType,sort] =searchParams.sort.split(" ");
       if(sortType=='asc')
