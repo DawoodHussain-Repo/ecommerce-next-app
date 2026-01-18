@@ -4,6 +4,16 @@ import useWixClient from "@/hooks/useWixClient";
 import { useCartStore } from "@/hooks/useCartStore";
 import { useState } from "react";
 
+// Check if Wix is configured (client-side check)
+const isWixConfigured = () => {
+  const clientId = process.env.NEXT_PUBLIC_WIX_CLIENT_ID;
+  return !!(
+    clientId &&
+    clientId !== "your_wix_client_id_here" &&
+    clientId.length > 10
+  );
+};
+
 const Add = ({
   productId,
   variantId,
@@ -14,6 +24,7 @@ const Add = ({
   stockNumber: number;
 }) => {
   const [quantity, setQuantity] = useState(1);
+  const wixConfigured = isWixConfigured();
 
   const handleQuantity = (type: "i" | "d") => {
     if (type === "d" && quantity > 1) {
@@ -26,6 +37,16 @@ const Add = ({
 
   const wixClient = useWixClient();
   const { addItem, isLoading } = useCartStore();
+
+  const handleAddToCart = () => {
+    if (!wixConfigured) {
+      alert(
+        "Cart functionality is disabled in demo mode. Please configure your Wix environment variables to enable cart and checkout.",
+      );
+      return;
+    }
+    addItem(wixClient, productId, variantId, quantity);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -60,9 +81,14 @@ const Add = ({
           )}
         </div>
         <button
-          onClick={() => addItem(wixClient, productId, variantId, quantity)}
+          onClick={handleAddToCart}
           disabled={isLoading}
           className="w-36 text-sm rounded-3xl ring-1 ring-red-400 text-red-400 py-2 px-4 hover:bg-red-400 hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white"
+          title={
+            !wixConfigured
+              ? "Demo mode - Configure Wix to enable"
+              : "Add to cart"
+          }
         >
           {isLoading ? "Adding..." : "Add to Cart"}
         </button>

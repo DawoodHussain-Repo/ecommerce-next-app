@@ -1,16 +1,20 @@
 "use client";
 
-import Image from 'next/image';
-import React, { useEffect } from 'react';
-import { useCartStore } from '@/hooks/useCartStore';
-import useWixClient from '@/hooks/useWixClient';
+import Image from "next/image";
+import React, { useEffect } from "react";
+import { useCartStore } from "@/hooks/useCartStore";
+import useWixClient from "@/hooks/useWixClient";
 import { media as wixMedia } from "@wix/sdk";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 // Check if Wix is configured (client-side check)
 const isWixConfigured = () => {
   const clientId = process.env.NEXT_PUBLIC_WIX_CLIENT_ID;
-  return !!(clientId && clientId !== 'your_wix_client_id_here' && clientId.length > 10);
+  return !!(
+    clientId &&
+    clientId !== "your_wix_client_id_here" &&
+    clientId.length > 10
+  );
 };
 
 const CartModal = () => {
@@ -27,14 +31,17 @@ const CartModal = () => {
 
   const handleCheckout = async () => {
     if (!wixConfigured) {
-      alert('Cart functionality is disabled in demo mode. Please configure your Wix environment variables.');
+      alert(
+        "Cart functionality is disabled in demo mode. Please configure your Wix environment variables.",
+      );
       return;
     }
-    
+
     try {
-      const checkout = await wixClient.currentCart.createCheckoutFromCurrentCart({
-        channelType: "WEB" as const,
-      });
+      const checkout =
+        await wixClient.currentCart.createCheckoutFromCurrentCart({
+          channelType: "WEB" as const,
+        });
 
       if (checkout.checkoutId) {
         // Redirect to Wix checkout page
@@ -49,12 +56,18 @@ const CartModal = () => {
     <div className="absolute left-[-280px] shadow-inner top-11 bg-gray-100 rounded-lg flex flex-col z-20 w-[400px]">
       {!wixConfigured ? (
         <div className="p-4">
-          <p className="text-lg font-semibold text-amber-600">Cart Disabled (Demo Mode)</p>
-          <p className="text-sm text-gray-600 mt-2">Configure Wix environment variables to enable cart functionality.</p>
+          <p className="text-lg font-semibold text-amber-600">
+            Cart Disabled (Demo Mode)
+          </p>
+          <p className="text-sm text-gray-600 mt-2">
+            Configure Wix environment variables to enable cart functionality.
+          </p>
         </div>
       ) : !cart || cart.lineItems?.length === 0 ? (
         <div className="p-4">
-          <p className="text-lg font-semibold text-gray-600">Your cart is empty</p>
+          <p className="text-lg font-semibold text-gray-600">
+            Your cart is empty
+          </p>
         </div>
       ) : (
         <div className="p-4">
@@ -73,7 +86,7 @@ const CartModal = () => {
                         item.image,
                         72,
                         96,
-                        {}
+                        {},
                       )}
                       alt={item.productName?.original || "Product"}
                       width={72}
@@ -111,7 +124,16 @@ const CartModal = () => {
                 <div className="flex justify-between items-center">
                   <p className="font-semibold">Subtotal</p>
                   <p className="font-semibold">
-                    ${cart.lineItems?.reduce((sum, item) => sum + (Number(item.price?.amount) || 0) * (item.quantity || 0), 0).toFixed(2) || 0}
+                    $
+                    {cart.lineItems
+                      ?.reduce(
+                        (sum, item) =>
+                          sum +
+                          (Number(item.price?.amount) || 0) *
+                            (item.quantity || 0),
+                        0,
+                      )
+                      .toFixed(2) || 0}
                   </p>
                 </div>
               </div>
@@ -120,7 +142,7 @@ const CartModal = () => {
               <div className="mt-4 flex flex-row justify-between gap-2">
                 <button
                   className="text-blue-600 underline rounded-full"
-                  onClick={() => router.push('/cart')}
+                  onClick={() => router.push("/cart")}
                 >
                   View Cart
                 </button>
