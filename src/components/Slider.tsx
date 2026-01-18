@@ -33,16 +33,16 @@ const slides = [
 const Slider = () => {
   const [current, setCurrent] = React.useState(0);
 
-  const handleSlideChange = (index) => {
+  const handleSlideChange = (index: number) => {
     setCurrent(index);
   };
 
-useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
-        setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+      setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 3000)
     return () => clearInterval(interval)
-});
+  });
 
   return (
     <div className="h-[calc(100vh-80px)]  overflow-hidden relative">
@@ -86,15 +86,13 @@ useEffect(() => {
         {slides.map((_, index) => (
           <div
             key={index}
-            className={`w-3 h-3 flex items-center justify-center cursor-pointer ${
-              current === index ? "scale-125 ring-2 ring-gray-700" : "ring-1 ring-gray-500"
-            } rounded-full transition-transform duration-300`}
+            className={`w-3 h-3 flex items-center justify-center cursor-pointer ${current === index ? "scale-125 ring-2 ring-gray-700" : "ring-1 ring-gray-500"
+              } rounded-full transition-transform duration-300`}
             onClick={() => handleSlideChange(index)}
           >
             <div
-              className={`w-2 h-2 ${
-                current === index ? "bg-gray-700" : "bg-gray-500"
-              } rounded-full`}
+              className={`w-2 h-2 ${current === index ? "bg-gray-700" : "bg-gray-500"
+                } rounded-full`}
             />
           </div>
         ))}
